@@ -1,6 +1,6 @@
 import os,wx,requests
 def urldownload(url,filename):#下载文件
-    down_res = requests.get(url)
+    down_res = requests.get(url=url,verify=False)
     if not os.path.exists(filename):
         file = open(filename,'a')
         file.close()
@@ -37,7 +37,7 @@ class MainWindow(wx.Frame):
         self.Destroy()
         Download(num)
 
-versions = '1.0'#版本1.0
+versions = '0.9'#版本0.9
 
 #打开Download.txt
 urldownload('http://github.com/huangzherui/Download/raw/main/Download.txt','./Download.txt')
