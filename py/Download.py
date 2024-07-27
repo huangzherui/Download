@@ -1,8 +1,8 @@
-import os,wx,requests
+import os,wx,requests,warnings
 def urldownload(url,filename):#下载文件
     try:
         down_res = requests.get(url=url,verify=False)
-    excect:
+    except:
         down_res
     if not os.path.exists(filename):
         file = open(filename,'a')
@@ -39,7 +39,7 @@ class MainWindow(wx.Frame):
     def OnButton(self,e,num):
         self.Destroy()
         Download(num)
-
+warnings.filterwarnings('ignore')
 versions = '1.0'#版本1.0
 
 #打开Download.txt
