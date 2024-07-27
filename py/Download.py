@@ -10,9 +10,9 @@ def urldownload(url,filename):#下载文件
 def Download(num):#下载
     if not os.path.isdir(filelist[num]):
         os.makedirs(filelist[num])
-    urldownload(('https://gitee.com/hzrjerry/Download/raw/master/zip/'+filelist[num]+'.7z.001'),('./'+filelist[num]+'/'+filelist[num]+'.7z.001'))
-    urldownload(('https://gitee.com/hzrjerry/Download/raw/master/zip/'+filelist[num]+'.7z.002'),('./'+filelist[num]+'/'+filelist[num]+'.7z.002'))
-    urldownload('https://gitee.com/hzrjerry/Download/raw/master/zip/7z.exe',('7z.exe'))
+    urldownload(('https://github.com/huangzherui/Download/raw/master/zip/'+filelist[num]+'.7z.001'),('./'+filelist[num]+'/'+filelist[num]+'.7z.001'))
+    urldownload(('https://github.com/huangzherui/Download/raw/master/zip/'+filelist[num]+'.7z.002'),('./'+filelist[num]+'/'+filelist[num]+'.7z.002'))
+    urldownload('https://github.com/huangzherui/Download/raw/master/zip/7z.exe',('7z.exe'))
     os.system(('cd '+filelist[num]+'&&copy /b '+filelist[num]+'.7z.00* '+filelist[num]+'.7z&&7z x '+filelist[num]+'.7z&&del '+filelist[num]+'.7z&&del 7z.exe&&del '+filelist[num]+'.7z.00*&&'+filelist[num]+''))
 
 #图形化类
@@ -37,16 +37,16 @@ class MainWindow(wx.Frame):
         self.Destroy()
         Download(num)
 
-versions = '1.2'#版本1.2
+versions = '1.0'#版本1.0
 
 #打开Download.txt
-urldownload('https://gitee.com/hzrjerry/Download/raw/master/Download.txt','./Download.txt')
+urldownload('https://github.com/huangzherui/Download/raw/master/Download.txt','./Download.txt')
 with open('Download.txt','r',encoding='utf8') as file:
     filelist = file.readlines()
 
 #检测版本
 if not filelist[len(filelist)-1] == versions:
-    urldownload('https://gitee.com/hzrjerry/Download/raw/master/py/DownloadDownload.py','DownloadDownload.py')
+    urldownload('https://github.com/huangzherui/Download/raw/master/py/DownloadDownload.py','DownloadDownload.py')
     os.system("python DownloadDownload.py")
 
 #运行图形程序
