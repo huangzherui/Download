@@ -9,5 +9,5 @@ def urldownload(url,filename):#下载文件
         file.close()
         with open(filename,'wb') as file:
             file.write(down_res.content)
-urldownload('https://gitee.com/hzrjerry/Download/raw/master/py/Download.py','Download.py')
+urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
 os.system("python Download.py")
