@@ -2,7 +2,7 @@ import os,wx,requests
 def urldownload(url,filename):#下载文件
     try:
         down_res = requests.get(url=url,verify=False)
-    expect:
+    excect:
         down_res
     if not os.path.exists(filename):
         file = open(filename,'a')
