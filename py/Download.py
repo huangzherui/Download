@@ -1,6 +1,6 @@
 import os,wx,requests,warnings
 def urldownload(url,filename):#下载文件
-        down_res = requests.get(url=url,verify=False)
+    down_res = requests.get(url=url,verify=False)
     if not os.path.exists(filename):
         file = open(filename,'a')
         file.close()
