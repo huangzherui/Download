@@ -3,7 +3,7 @@ def urldownload(url,filename):#下载文件
     try:
         down_res = requests.get(url=url,verify=False)
     except:
-        down_res
+        url
     if not os.path.exists(filename):
         file = open(filename,'a')
         file.close()
@@ -11,6 +11,7 @@ def urldownload(url,filename):#下载文件
         file.write(down_res.content)
 
 def Download(num):#下载
+    filelist[num] = filelist[num].strip('/n')
     if not os.path.isdir(filelist[num]):
         os.makedirs(filelist[num])
     urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filelist[num]+'.7z.001'),('./'+filelist[num]+'/'+filelist[num]+'.7z.001'))
@@ -39,7 +40,18 @@ class MainWindow(wx.Frame):
     def OnButton(self,e,num):
         self.Destroy()
         Download(num)
-warnings.filterwarnings('ignore')
+
+if not os.isfile('Download.bat'):
+    with open('Download.bat','w') as file:
+        file.write('''@echo off
+python Downloadfile.py''')
+        
+if not os.isfile('say.txt'):
+    file = open('say.txt','w')
+    file.close()
+        
+os.system('Download.bat')
+
 versions = '1.0'#版本1.0
 
 #打开Download.txt
@@ -48,7 +60,7 @@ with open('Download.txt','r',encoding='utf8') as file:
     filelist = file.readlines()
 
 #检测版本
-if not filelist[len(filelist)-1] == versions:
+if not filelist[len(filelist)-1].strip('\n') == versions:
     urldownload('http://github.com/huangzherui/Download/raw/main/py/DownloadDownload.py','DownloadDownload.py')
     os.system("python DownloadDownload.py")
 
