@@ -61,17 +61,15 @@ with open('Download.txt','r',encoding='utf8') as file:
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
     with open('DownloadDownload.py','w') as file:
-        file.write('''import requests,os
+        file.write('''import requests,os,warning
 def urldownload(url,filename):#下载文件
-    down_res = requests.get(url)
-    try:
-        with open(filename,'wb') as file:
-            file.write(down_res.content)
-    except:
+    warnings.filterwarnings('ignore')
+    down_res = requests.get(url=url,verify=False)
+    if not os.path.exists(filename):
         file = open(filename,'a')
         file.close()
-        with open(filename,'wb') as file:
-            file.write(down_res.content)
+    with open(filename,'wb') as file:
+    file.write(down_res.content)
 urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
 os.system("start python Download.py")
 quit()''')
