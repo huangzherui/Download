@@ -1,23 +1,20 @@
-import os,wx,requests,warnings
-def urldownload(url,filename):#下载文件
-    try:
-        down_res = requests.get(url=url,verify=False)
-    except:
-        url
-    if not os.path.exists(filename):
-        file = open(filename,'a')
-        file.close()
-    with open(filename,'wb') as file:
-        file.write(down_res.content)
+import os,wx
+from tkinter import messagebox
+def urldownload(url,filename,wait=None):#下载文件
+    if wait:
+        os.system(('python Downloadfile.py '+url+' '+filename))
+    else:
+        os.system(('start python Downloadfile.py '+url+' '+filename))
 
 def Download(num):#下载
-    filelist[num] = filelist[num].strip('/n')
-    if not os.path.isdir(filelist[num]):
-        os.makedirs(filelist[num])
-    urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filelist[num]+'.7z.001'),('./'+filelist[num]+'/'+filelist[num]+'.7z.001'))
-    urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filelist[num]+'.7z.002'),('./'+filelist[num]+'/'+filelist[num]+'.7z.002'))
-    urldownload('http://github.com/huangzherui/Download/raw/main/zip/7z.exe',('7z.exe'))
-    os.system(('cd '+filelist[num]+'&&copy /b '+filelist[num]+'.7z.00* '+filelist[num]+'.7z&&7z x '+filelist[num]+'.7z&&del '+filelist[num]+'.7z&&del 7z.exe&&del '+filelist[num]+'.7z.00*&&'+filelist[num]+''))
+    filename = filelist[num].strip('\n')
+    os.makedirs(filename)
+    messagebox.showinfo('提示','下载中……')
+    urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filename+'.7z.001'),('./'+filename+'/'+filename+'.7z.001'))
+    urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filename+'.7z.002'),('./'+filename+'/'+filename+'.7z.002'))
+    urldownload('http://github.com/huangzherui/Download/raw/main/zip/7z.dll',('./'+filename+'/'+'7z.dll'))
+    urldownload('http://github.com/huangzherui/Download/raw/main/zip/7z.exe',('./'+filename+'/'+'7z.exe'),True)
+    os.system(('cd '+filename+'&&copy /b '+filename+'.7z.00* '+filename+'.7z&&7z x '+filename+'.7z&&del '+filename+'.7z&&del '+filename+'.7z.00*&&start '+filename+''))
 
 #图形化类
 class MainWindow(wx.Frame):
@@ -41,28 +38,45 @@ class MainWindow(wx.Frame):
         self.Destroy()
         Download(num)
 
-if not os.isfile('Download.bat'):
-    with open('Download.bat','w') as file:
-        file.write('''@echo off
-python Downloadfile.py''')
-        
-if not os.isfile('say.txt'):
-    file = open('say.txt','w')
+if not os.path.isfile('Downloadfile.py'):
+    with open('Downloadfile.py','w') as file:
+        file.write('''import requests,warnings,sys,os
+url = sys.argv[1]                   
+filename = sys.argv[2]
+warnings.filterwarnings('ignore')
+down_res = requests.get(url=url,verify=False)
+if not os.path.exists(filename):
+    file = open(filename,'a')
     file.close()
-        
-os.system('Download.bat')
+with open(filename,'wb') as file:
+    file.write(down_res.content)''')
 
 versions = '1.0'#版本1.0
 
 #打开Download.txt
-urldownload('http://github.com/huangzherui/Download/raw/main/Download.txt','./Download.txt')
+urldownload('http://github.com/huangzherui/Download/raw/main/Download.txt','./Download.txt',True)
 with open('Download.txt','r',encoding='utf8') as file:
     filelist = file.readlines()
 
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
-    urldownload('http://github.com/huangzherui/Download/raw/main/py/DownloadDownload.py','DownloadDownload.py')
-    os.system("python DownloadDownload.py")
+    with open('DownloadDownload.py','w') as file:
+        file.write('''import requests,os
+def urldownload(url,filename):#下载文件
+    down_res = requests.get(url)
+    try:
+        with open(filename,'wb') as file:
+            file.write(down_res.content)
+    except:
+        file = open(filename,'a')
+        file.close()
+        with open(filename,'wb') as file:
+            file.write(down_res.content)
+urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
+os.system("start python Download.py")
+quit()''')
+    os.system("start python DownloadDownload.py")
+    quit()
 
 #运行图形程序
 app = wx.App()
