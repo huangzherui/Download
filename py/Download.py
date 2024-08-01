@@ -1,6 +1,7 @@
 import os,wx,warnings,requests
 from tkinter import messagebox
 warnings.filterwarnings('ignore')
+update = False
 
 def urldownload(url,filename):#下载文件
     down_res = requests.get(url=url,verify=False)
@@ -14,7 +15,7 @@ def Download(num):#下载
     filename = filelist[num].strip('\n')
     os.makedirs(filename)
     messagebox.showinfo('提示','下载中……')
-    os.system(('start python Downloadfile.py '+filename))
+    os.system(('start python Downloadbs.py '+filename))
 
 #图形化类
 class MainWindow(wx.Frame):
@@ -37,37 +38,9 @@ class MainWindow(wx.Frame):
     def OnButton(self,e,num):
         self.Destroy()
         Download(num)
-
-if not os.path.isfile('Downloadfile.py'):
-    with open('Downloadfile.py','w') as file:
-        file.write('''import requests,warnings,sys,os                   
-filename = sys.argv[1]
-warnings.filterwarnings('ignore')
-down_res = requests.get(url=url,verify=False)
-if not os.path.exists(filename):
-    file = open(filename,'a')
-    file.close()
-with open(filename,'wb') as file:
-    file.write(down_res.content)''')
         
 if not os.path.isfile('Downloadbs.py'):
-    with open('Downloadbs.py','w') as file:
-        file.write('''import requests,warnings,sys,os
-url = sys.argv[1]                   
-filename = sys.argv[2]
-warnings.filterwarnings('ignore')
-def urldownload(url,filename):
-    down_res = requests.get(url=url,verify=False)
-    if not os.path.exists(filename):
-        file = open(filename,'a')
-        file.close()
-    with open(filename,'wb') as file:
-        file.write(down_res.content)
-urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filename+'.7z.001'),('./'+filename+'/'+'.7z.001'))
-urldownload(('http://github.com/huangzherui/Download/raw/main/zip/'+filename+'.7z.002'),('./'+filename+'/'+'.7z.002'))
-urldownload('http://github.com/huangzherui/Download/raw/main/zip/7z.dll',('./'+filename+'/'+'7z.dll'))
-urldownload('http://github.com/huangzherui/Download/raw/main/zip/7z.exe',('./'+filename+'/'+'7z.exe'))
-os.system(('cd '+filename+'&&copy /b '+filename+'.7z.00* '+filename+'.7z&&7z x '+filename+'.7z'))''')
+    urldownload('http://github.com/huangzherui/Download/raw/main/Downloadbs.py','./Downloadbs.py')
 
 versions = '1.0'#版本1.0
 
@@ -78,19 +51,8 @@ with open('Download.txt','r',encoding='utf8') as file:
 
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
-    with open('DownloadDownload.py','w') as file:
-        file.write('''import requests,os,warnings
-def urldownload(url,filename):
-    warnings.filterwarnings('ignore')
-    down_res = requests.get(url=url,verify=False)
-    if not os.path.exists(filename):
-        file = open(filename,'a')
-        file.close()
-    with open(filename,'wb') as file:
-        file.write(down_res.content)
-urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
-os.system("start python Download.py")
-quit()''')
+
+    urldownload('http://github.com/huangzherui/Download/raw/main/DownloadDownload.py','./DownloadDownload.py')
     os.system("start python DownloadDownload.py")
     quit()
 
