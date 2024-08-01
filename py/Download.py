@@ -51,7 +51,7 @@ with open('Download.txt','r',encoding='utf8') as file:
 
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
-
+    update = True
     urldownload('http://github.com/huangzherui/Download/raw/main/DownloadDownload.py','./DownloadDownload.py')
     os.system("start python DownloadDownload.py")
     quit()
