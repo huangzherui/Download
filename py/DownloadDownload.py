@@ -1,13 +1,12 @@
-import requests,os
-def urldownload(url,filename):#下载文件
-    down_res = requests.get(url)
-    try:
-        with open(filename,'wb') as file:
-            file.write(down_res.content)
-    except:
+import requests,os,warnings
+def urldownload(url,filename):
+    warnings.filterwarnings('ignore')
+    down_res = requests.get(url=url,verify=False)
+    if not os.path.exists(filename):
         file = open(filename,'a')
         file.close()
-        with open(filename,'wb') as file:
-            file.write(down_res.content)
+    with open(filename,'wb') as file:
+        file.write(down_res.content)
 urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
-os.system("python Download.py")
+os.system("start python Download.py")
+quit()
