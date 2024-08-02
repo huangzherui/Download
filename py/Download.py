@@ -1,7 +1,7 @@
 import os,wx,warnings,requests
 from tkinter import messagebox
 warnings.filterwarnings('ignore')
-update = False
+isupdate = True
 
 def urldownload(url,filename):#下载文件
     down_res = requests.get(url=url,verify=False)
@@ -34,15 +34,21 @@ class MainWindow(wx.Frame):
         buttonlist = []
         for i in range(len(filelist)):
             if i < 19:
-                if i+1 == len(filename):
-                    updatebutton = wx.Button(panel, label=filelist[i], pos=(0,0+i*30))
-                    updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
+                if i+1 == len(filelist):
+                    if isupdate:
+                        updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(0,0+i*30))
+                        updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
                 else:
                     buttonlist.append(wx.Button(panel, label=filelist[i], pos=(0,0+i*30)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
             else:
-                buttonlist.append(wx.Button(panel, label=filelist[i], pos=(50,i-20*30)))
-                buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+                if i+1 == len(filelist):
+                    if isupdate:
+                        updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(50,i-20*30))
+                        updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
+                else:
+                    buttonlist.append(wx.Button(panel, label=filelist[i], pos=(50,i-20*30)))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
         self.Centre()
     def OnButton(self,e,num):
         self.Destroy()
@@ -63,7 +69,7 @@ with open('Download.txt','r',encoding='utf8') as file:
 
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
-    update = True
+    isupdate = True
 
 #运行图形程序
 app = wx.App()
