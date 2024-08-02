@@ -38,15 +38,15 @@ class MainWindow(wx.Frame):
                         updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(0,0+i*30))
                         updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
                 else:
-                    buttonlist.append(wx.Button(panel, label=eval(programlist[i])["name"], pos=(0,0+i*30)))
+                    buttonlist.append(wx.Button(panel, label=programlist[i]["name"], pos=(0,0+i*30)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
             else:
-                if 1 == len(programlist):
+                if i+1 == len(programlist):
                     if isupdate:
                         updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(50,i-20*30))
                         updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
                 else:
-                    buttonlist.append(wx.Button(panel, label=eval(programlist[i])["name"], pos=(50,i-20*30)))
+                    buttonlist.append(wx.Button(panel, label=programlist[i]["name"], pos=(50,i-20*30)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
         self.Centre()
     def OnButton(self,e,num):
@@ -69,7 +69,7 @@ with open('marketmain.cfg','r',encoding='utf8') as file:
 
 
 #检测版本
-if eval(programlist[0])["version"]  == versions:
+if programlist[0]["version"]  == versions:
     isupdate = True
 
 #运行图形程序
