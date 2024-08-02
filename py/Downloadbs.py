@@ -1,6 +1,5 @@
-import requests,warnings,sys,os
-url = sys.argv[1]                   
-filename = sys.argv[2]
+import requests,warnings,sys,os                 
+filename = sys.argv[1]
 warnings.filterwarnings('ignore')
 def urldownload(url,filename):
     down_res = requests.get(url=url,verify=False)
