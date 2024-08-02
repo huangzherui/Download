@@ -40,7 +40,7 @@ class MainWindow(wx.Frame):
         Download(num)
         
 if not os.path.isfile('Downloadbs.py'):
-    urldownload('http://github.com/huangzherui/Download/raw/main/Downloadbs.py','./Downloadbs.py')
+    urldownload('http://github.com/huangzherui/Download/raw/main/py/Downloadbs.py','./Downloadbs.py')
 
 versions = '1.0'#版本1.0
 
@@ -52,7 +52,7 @@ with open('Download.txt','r',encoding='utf8') as file:
 #检测版本
 if not filelist[len(filelist)-1].strip('\n') == versions:
     update = True
-    urldownload('http://github.com/huangzherui/Download/raw/main/DownloadDownload.py','./DownloadDownload.py')
+    urldownload('http://github.com/huangzherui/Download/raw/main/py/DownloadDownload.py','./DownloadDownload.py')
     os.system("start python DownloadDownload.py")
     quit()
 
