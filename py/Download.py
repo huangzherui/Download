@@ -14,7 +14,7 @@ def urldownload(url,filename):#下载文件
 def Download(num):#下载
     #os.makedirs(filename)
     messagebox.showinfo('提示','下载中……')
-    os.system(('start python Downloadbs.py '+str(num))
+    os.system(('start python Downloadbs.py '+str(num)))
 
 def update():
     urldownload('http://github.com/huangzherui/Download/raw/zbhedit/py/DownloadDownload.py','./DownloadDownload.py')
@@ -41,7 +41,7 @@ class MainWindow(wx.Frame):
                     buttonlist.append(wx.Button(panel, label=programlist[i]["name"], pos=(0,0+i*30)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
             else:
-                if 0 == len(programlist):
+                if i+1 == len(programlist):
                     if isupdate:
                         updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(50,i-20*30))
                         updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
