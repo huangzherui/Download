@@ -41,7 +41,7 @@ class MainWindow(wx.Frame):
                     buttonlist.append(wx.Button(panel, label=eval(programlist[i])["name"], pos=(0,0+i*30)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
             else:
-                if i+1 == len(programlist):
+                if 1 == len(programlist):
                     if isupdate:
                         updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(50,i-20*30))
                         updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
