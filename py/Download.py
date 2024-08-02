@@ -1,7 +1,7 @@
 import os,wx,warnings,requests
 from tkinter import messagebox
 warnings.filterwarnings('ignore')
-isupdate = True
+isupdate = False
 
 def urldownload(url,filename):#下载文件
     down_res = requests.get(url=url,verify=False)
