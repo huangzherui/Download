@@ -7,6 +7,6 @@ def urldownload(url,filename):
         file.close()
     with open(filename,'wb') as file:
         file.write(down_res.content)
-urldownload('https://github.com/huangzherui/Download/raw/main/py/Download.py','Download.py')
+urldownload('https://github.com/huangzherui/Download/raw/zbhedit/py/Download.py','Download.py')
 os.system("start python Download.py")
 quit()
