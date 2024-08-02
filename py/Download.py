@@ -14,7 +14,7 @@ def urldownload(url,filename):#下载文件
 def Download(num):#下载
     #os.makedirs(filename)
     messagebox.showinfo('提示','下载中……')
-    os.system(('start python Downloadbs.py '+num))
+    os.system(('start python Downloadbs.py '+str(num))
 
 def update():
     urldownload('http://github.com/huangzherui/Download/raw/zbhedit/py/DownloadDownload.py','./DownloadDownload.py')
