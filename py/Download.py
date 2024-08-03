@@ -2,7 +2,13 @@ import os,wx,warnings,requests
 from tkinter import messagebox
 warnings.filterwarnings('ignore')
 isupdate = False
-
+def webdbget(user,password,tag):
+    import requests
+    postdata = {'user':user,'secret':password,'action':'get','tag':tag}
+    r = requests.post('http://tinywebdb.appinventor.space/api',data=postdata)
+    temp = r.text
+    temp1 = eval(temp)[tag]
+    return temp1
 def urldownload(url,filename):#下载文件
     down_res = requests.get(url=url,verify=False)
     if not os.path.exists(filename):
@@ -38,14 +44,14 @@ class MainWindow(wx.Frame):
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
                 else:
                     buttonlist.append(wx.Button(panel, label=programlist[i+1]["name"], pos=(0,0)))
-                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i+1:self.OnButton(e, mark))
             else:
                 try:
                     buttonlist.append(wx.Button(panel, label=programlist[i+(0 if isupdate else 1)]["name"], pos=(0,0+i*30)))
                 except:
                     break
                 if i < 19:#第一列
-                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i+(0 if isupdate else 1):self.OnButton(e, mark))
                 else:#第二列
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
         self.Centre()
@@ -62,10 +68,10 @@ if not os.path.isfile('Downloadbs.py'):
 versions = 1.0#版本1.0
 
 #打开marketmain.cfg
-urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
-with open('marketmain.cfg','r',encoding='utf8') as file:
-    programlistraw = file.read()
-    programlist = eval(programlistraw)
+#urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
+with open('marketmain.cfg','w',encoding='utf8') as file:
+    programlist = webdbget('zhmarket','9d6ef697','marketapps')
+    file.write(str(programlist))
 
 
 #检测版本
