@@ -31,16 +31,23 @@ class MainWindow(wx.Frame):
         self.SetSize(400, 600)
         panel = wx.Panel(self)
         buttonlist = []
-        if isupdate:
-            updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(0,0))
-            updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
-        for i in range(1 if isupdate else 0,len(programlist)-1):
-            if i < 19:#第一列
-                buttonlist.append(wx.Button(panel, label=programlist[i]["name"], pos=(0,0+i*30)))
-                buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
-            else:#第二列
-                buttonlist.append(wx.Button(panel, label=programlist[i]["name"], pos=(50,i-20*30)))
-                buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+        for i in range(len(programlist)):
+            if i == 0:
+                if isupdate:
+                    buttonlist.append(wx.Button(panel, label='有新版本，点我更新', pos=(0,0)))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
+                else:
+                    buttonlist.append(wx.Button(panel, label=programlist[i+1]["name"], pos=(0,0)))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+            else:
+                try:
+                    buttonlist.append(wx.Button(panel, label=programlist[i+(0 if isupdate else 1)]["name"], pos=(0,0+i*30)))
+                except:
+                    break
+                if i < 19:#第一列
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+                else:#第二列
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
         self.Centre()
     def OnButton(self,e,name):
         self.Destroy()
@@ -52,18 +59,19 @@ class MainWindow(wx.Frame):
 if not os.path.isfile('Downloadbs.py'):
     urldownload('http://github.com/huangzherui/Download/raw/zbhedit/py/Downloadbs.py','./Downloadbs.py')
 
-versions = '1.0'#版本1.0
+versions = 1.0#版本1.0
 
 #打开marketmain.cfg
-urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
+#urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
 with open('marketmain.cfg','r',encoding='utf8') as file:
     programlistraw = file.read()
     programlist = eval(programlistraw)
 
 
 #检测版本
-if programlist[0]["version"]  == versions:
+if programlist[0]["version"] > versions:
     isupdate = True
+    print(isupdate)
 
 #运行图形程序
 app = wx.App()
