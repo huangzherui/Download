@@ -62,7 +62,7 @@ if not os.path.isfile('Downloadbs.py'):
 versions = 1.0#版本1.0
 
 #打开marketmain.cfg
-#urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
+urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
 with open('marketmain.cfg','r',encoding='utf8') as file:
     programlistraw = file.read()
     programlist = eval(programlistraw)
