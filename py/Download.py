@@ -12,13 +12,12 @@ def urldownload(url,filename):#下载文件
         file.write(down_res.content)
 
 def Download(num):#下载
-    filename = filelist[num].strip('\n')
-    os.makedirs(filename)
+    #os.makedirs(filename)
     messagebox.showinfo('提示','下载中……')
-    os.system(('start python Downloadbs.py '+filename))
+    os.system(('start python Downloadbs.py '+str(num)))
 
-def update():
-    urldownload('http://github.com/huangzherui/Download/raw/main/py/DownloadDownload.py','./DownloadDownload.py')
+def update():#更新
+    urldownload('http://github.com/huangzherui/Download/raw/zbhedit/py/DownloadDownload.py','./DownloadDownload.py')
     os.system("start python DownloadDownload.py")
     quit()
 
@@ -32,44 +31,47 @@ class MainWindow(wx.Frame):
         self.SetSize(400, 600)
         panel = wx.Panel(self)
         buttonlist = []
-        for i in range(len(filelist)):
-            if i < 19:
-                if i+1 == len(filelist):
-                    if isupdate:
-                        updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(0,0+i*30))
-                        updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
+        for i in range(len(programlist)):
+            if i == 0:
+                if isupdate:
+                    buttonlist.append(wx.Button(panel, label='有新版本，点我更新', pos=(0,0)))
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
                 else:
-                    buttonlist.append(wx.Button(panel, label=filelist[i], pos=(0,0+i*30)))
+                    buttonlist.append(wx.Button(panel, label=programlist[i+1]["name"], pos=(0,0)))
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
             else:
-                if i+1 == len(filelist):
-                    if isupdate:
-                        updatebutton = wx.Button(panel, label='有新版本，点我更新', pos=(50,i-20*30))
-                        updatebutton.Bind(wx.EVT_BUTTON,lambda e,mark='update':self.OnButton(e, mark))
-                else:
-                    buttonlist.append(wx.Button(panel, label=filelist[i], pos=(50,i-20*30)))
+                try:
+                    buttonlist.append(wx.Button(panel, label=programlist[i+(0 if isupdate else 1)]["name"], pos=(0,0+i*30)))
+                except:
+                    break
+                if i < 19:#第一列
+                    buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
+                else:#第二列
                     buttonlist[i].Bind(wx.EVT_BUTTON,lambda e,mark=i:self.OnButton(e, mark))
         self.Centre()
-    def OnButton(self,e,num):
+    def OnButton(self,e,name):
         self.Destroy()
-        if num == 'update':
+        if name == 'update':
             update()
         else:
-            Download(num)
+            Download(name)
         
 if not os.path.isfile('Downloadbs.py'):
-    urldownload('http://github.com/huangzherui/Download/raw/main/py/Downloadbs.py','./Downloadbs.py')
+    urldownload('http://github.com/huangzherui/Download/raw/zbhedit/py/Downloadbs.py','./Downloadbs.py')
 
-versions = '1.0'#版本1.0
+versions = 1.0#版本1.0
 
-#打开Download.txt
-urldownload('http://github.com/huangzherui/Download/raw/main/Download.txt','./Download.txt')
-with open('Download.txt','r',encoding='utf8') as file:
-    filelist = file.readlines()
+#打开marketmain.cfg
+#urldownload('https://github.com/huangzherui/Download/raw/zbhedit/marketmain.cfg','./marketmain.cfg')
+with open('marketmain.cfg','r',encoding='utf8') as file:
+    programlistraw = file.read()
+    programlist = eval(programlistraw)
+
 
 #检测版本
-if not filelist[len(filelist)-1].strip('\n') == versions:
+if programlist[0]["version"] > versions:
     isupdate = True
+    print(isupdate)
 
 #运行图形程序
 app = wx.App()
