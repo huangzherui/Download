@@ -14,8 +14,8 @@ def urldownload(url,filename):
         file.close()
     with open(filename,'wb') as file:
         file.write(down_res.content)
-#urldownload('http://github.com/huangzherui/Download/raw/zbhedit/zip/7z.dll',('./'+filename+'/'+'7z.dll'))
-#urldownload('http://github.com/huangzherui/Download/raw/zbhedit/zip/7z.exe',('./'+filename+'/'+'7z.exe'))
+urldownload('http://github.com/huangzherui/Download/raw/zbhedit/zip/7z.dll',('./'+filename+'/'+'7z.dll'))
+urldownload('http://github.com/huangzherui/Download/raw/zbhedit/zip/7z.exe',('./'+filename+'/'+'7z.exe'))
 for i in range(programlist[int(sys.argv[1])]["spilttotal"]):
     s = '%03d' % int(i+1)
     down_url = programlist[int(sys.argv[1])]["downloadurl"]
