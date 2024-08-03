@@ -1,7 +1,7 @@
 # 下载
 [BataReleases](https://github.com/huangzherui/Download/releases/tag/Zbh_edited_Beta_version)
 
-[Releases](https://github.com/huangzherui/Download/releases/tag/RTM)
+[Releases](https://github.com/huangzherui/Download/releases/tag/RTM_Python_Edition)
 #### 介绍
 给我的程序作数据库
 
