@@ -29,10 +29,10 @@ def Download(mode,AID):#下载
 
 def update():#更新
     if isrunningexe:
-        urldownload(('http://github.com/huangzherui/Download/raw/main/version/exe/'+versions+'/DownloadDownload.exe'),'./DownloadDownload.exe')
+        urldownload(('http://github.com/huangzherui/Download/raw/main/version/exe/'+str(versions)+'/DownloadDownload.exe'),'./DownloadDownload.exe')
         os.system("start python DownloadDownload.exe")
     else: 
-        urldownload(('http://github.com/huangzherui/Download/raw/main/version/py/'+versions+'/DownloadDownload.py'),'./DownloadDownload.py')
+        urldownload(('http://github.com/huangzherui/Download/raw/main/version/python/'+str(versions)+'/DownloadDownload.py'),'./DownloadDownload.py')
         os.system("start python DownloadDownload.py")
     quit()
 
@@ -70,9 +70,9 @@ class MainWindow(wx.Frame):
         
 if not os.path.isfile('Downloadbs.py'):#是否有Downloadbs.py
     if isrunningexe:
-        urldownload(('http://github.com/huangzherui/Download/raw/main/exe/'+versions+'/Downloadbs.exe'),'./Downloadbs.exe')
+        urldownload(('http://github.com/huangzherui/Download/raw/main/exe/'+str(versions)+'/Downloadbs.exe'),'./Downloadbs.exe')
     else:
-        urldownload(('http://github.com/huangzherui/Download/raw/main/py/'+versions+'/Downloadbs.py'),'./Downloadbs.py')
+        urldownload(('http://github.com/huangzherui/Download/raw/main/python/'+str(versions)+'/Downloadbs.py'),'./Downloadbs.py')
 #打开marketmain.cfg
 with open('marketmain.cfg','w',encoding='utf8') as file:
     programlist = webdbget('zhmarket','9d6ef697','marketapps')
